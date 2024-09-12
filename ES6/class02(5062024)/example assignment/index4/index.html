@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mobile Filter</title>
+  <style>
+    /* Basic CSS for styling */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f4f4f4;
+    }
+    .container {
+      text-align: center;
+    }
+    select {
+      padding: 10px;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    li {
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Mobile Filter</h2>
+  <select id="brandDropdown" onchange="populateModels()">
+    <option value="">Select Brand</option>
+    <option value="Samsung">Samsung</option>
+    <option value="Apple">Apple</option>
+    <option value="Google">Google</option>
+    <!-- Add more options as needed -->
+  </select>
+  <select id="modelDropdown" onchange="filterAndRenderMobiles()">
+    <option value="">Select Model</option>
+    <!-- Models will be populated dynamically using JavaScript -->
+  </select>
+  <select id="optionDropdown" onchange="filterAndRenderMobiles()">
+    <option value="">Select Option</option>
+    <option value="Camera">Camera</option>
+    <option value="Battery">Battery</option>
+    <!-- Add more options as needed -->
+  </select>
+  <ul id="mobileList"></ul>
+</div>
+
+<script>
+  // Sample mobile data
+  const mobiles = Object.freeze({
+    Samsung: {
+      "Galaxy S20": { Camera: "12MP", Battery: "4000mAh" },
+      "Galaxy Note 20": { Camera: "108MP", Battery: "4500mAh" },
+      "Galaxy A71": { Camera: "64MP", Battery: "4500mAh" }
+    },
+    Apple: {
+      "iPhone 7":  {
+      processor: "Snapdragon 8 Gen 2",
+      memoryRam: 12,
+        storage: 512,
+        camera:200,
+        main: 200,
+        ultrawide: 12,
+        telephoto: 10,
+        telephotoPeriscope: 10,
+        front: 10,
+        battery: 5000,
+        operatingSystem: "Android 13",
+        specialFeatures: ["S Pen support", "Ultrasonic fingerprint sensor"],
+    },
+      "iPhone 11": { Camera: "12MP", Battery: "3110mAh" },
+      "iPhone 12": { Camera: "12MP", Battery: "2815mAh" },
+      "iPhone SE": { Camera: "12MP", Battery: "1821mAh" }
+    },
+    Google: {
+      "Pixel 4a": { Camera: "12.2MP", Battery: "3140mAh" },
+      "Pixel 5": { Camera: "12.2MP", Battery: "4080mAh" },
+      "Pixel 4XL": { Camera: "12.2MP", Battery: "3700mAh" }
+    }
+    // Add more companies, models, and specifications as needed
+  });
+
+  // Function to populate models dropdown based on selected brand
+  function populateModels() {
+    const brandDropdown = document.getElementById("brandDropdown");
+    const modelDropdown = document.getElementById("modelDropdown");
+    const selectedBrand = brandDropdown.value;
+    
+    // Clear previous options
+    modelDropdown.innerHTML = "<option value=''>Select Model</option>";
+    
+    // Populate models based on selected brand
+    if (selectedBrand) {
+      const models = Object.freeze(Object.keys(mobiles[selectedBrand]));
+      for (let i = 0; i < models.length; i++) {
+        const model = models[i];
+        const option = document.createElement("option");
+        option.textContent = model;
+        option.value = model;
+        modelDropdown.appendChild(option);
+      }
+    }
+    
+    // After populating models, call the filtering function
+    filterAndRenderMobiles();
+  }
+
+  // Function to filter and render mobiles based on selected options
+  function filterAndRenderMobiles() {
+    const brandDropdown = document.getElementById("brandDropdown");
+    const modelDropdown = document.getElementById("modelDropdown");
+    const optionDropdown = document.getElementById("optionDropdown");
+    const mobileListElement = document.getElementById("mobileList");
+    const selectedBrand = brandDropdown.value;
+    const selectedModel = modelDropdown.value;
+    const selectedOption = optionDropdown.value;
+
+    mobileListElement.innerHTML = ""; // Clear previous list
+    
+    // Filter and render mobiles based on selected brand, model, and option
+    if (selectedBrand && selectedModel && selectedOption) {
+      const optionValue = mobiles[selectedBrand][selectedModel][selectedOption];
+      const li = document.createElement("li");
+      li.textContent = `${selectedBrand} - ${selectedModel}: ${selectedOption} - ${optionValue}`;
+      mobileListElement.appendChild(li);
+    } else if (selectedBrand && selectedModel) {
+      const specs = mobiles[selectedBrand][selectedModel];
+      for (const [key, value] of Object.entries(specs)) {
+        const li = document.createElement("li");
+        li.textContent = `${selectedBrand} - ${selectedModel}: ${key} - ${value}`;
+        mobileListElement.appendChild(li);
+      }
+    }
+  }
+
+  // Initial population of models dropdown
+  populateModels();
+</script>
+
+</body>
+</html>

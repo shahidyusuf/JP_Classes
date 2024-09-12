@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mobile Filter</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <label for="mobile-select">Select Mobile:</label>
+    <select id="mobile-select" onchange="populateModels()">
+      <option value="" disabled selected>Select Mobile</option>
+    </select>
+
+    <label for="model-select">Select Model:</label>
+    <select id="model-select">
+      <option value="" disabled selected>Select Model</option>
+    </select>
+
+    <div id="model-description"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

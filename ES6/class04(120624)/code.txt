@@ -1,0 +1,10 @@
+1.arow function says if u display single line statement not nessasary retun key word and curly bracket{}
+multi line must return and curly bracket..
+
+
+2.arrow function gave one value then not type bracket ,a , but if multi value gave then type bracket(a,b)..
+
+higher order function...
+
+highere order function woh hotay jo apnay parameters may dosra function recieve kartay hay..
+

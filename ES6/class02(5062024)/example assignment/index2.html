@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mobile Project Filter</title>
+  <style>
+    /* Basic CSS for styling */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f4f4f4;
+    }
+    .container {
+      text-align: center;
+    }
+    select {
+      padding: 10px;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    li {
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Mobile Project Filter</h2>
+  <select id="companyDropdown">
+    <option value="">Select Company</option>
+    <option value="Samsung">Samsung</option>
+    <option value="Apple">Apple</option>
+    <option value="Google">Google</option>
+    <!-- Add more options as needed -->
+  </select>
+  <select id="modelDropdown">
+    <option value="">Select Model</option>
+    <!-- Models will be populated dynamically using JavaScript -->
+  </select>
+  <ul id="mobileList"></ul>
+</div>
+
+<script>
+  // Sample mobile data
+  const mobiles = {
+    Samsung: ["Galaxy S20", "Galaxy Note 20", "Galaxy A71"],
+    Apple: ["iPhone 11", "iPhone 12", "iPhone SE"],
+    Google: ["Pixel 4a", "Pixel 5", "Pixel 4XL"]
+    // Add more companies and models as needed
+  };
+
+  // Function to populate models dropdown based on selected company
+  function populateModels() {
+    const company = document.getElementById("companyDropdown").value;
+    const modelDropdown = document.getElementById("modelDropdown");
+    modelDropdown.innerHTML = "<option value=''>Select Model</option>";
+    if (company) {
+      const models = mobiles[company];
+      models.forEach(model => {
+        const option = document.createElement("option");
+        option.textContent = model;
+        option.value = model;
+        modelDropdown.appendChild(option);
+      });
+    }
+  }
+
+  // Function to filter and render mobile projects
+  function filterAndRenderProjects() {
+    const company = document.getElementById("companyDropdown").value;
+    const model = document.getElementById("modelDropdown").value;
+
+    const filteredProjects = [];
+
+    // Filtering projects based on the selected company and model
+    if (company && model) {
+      filteredProjects.push(`${company} - ${model}`);
+    } else if (company) {
+      const models = mobiles[company];
+      models.forEach(model => {
+        filteredProjects.push(`${company} - ${model}`);
+      });
+    }
+
+    // Rendering the filtered projects
+    const mobileListElement = document.getElementById("mobileList");
+    mobileListElement.innerHTML = "";
+    filteredProjects.forEach(project => {
+      const li = document.createElement("li");
+      li.textContent = project;
+      mobileListElement.appendChild(li);
+    });
+  }
+
+  // Event listeners for dropdown change
+  document.getElementById("companyDropdown").addEventListener("change", () => {
+    populateModels();
+    filterAndRenderProjects();
+  });
+  document.getElementById("modelDropdown").addEventListener("change", filterAndRenderProjects);
+
+  // Initial population of models dropdown
+  populateModels();
+</script>
+
+</body>
+</html>

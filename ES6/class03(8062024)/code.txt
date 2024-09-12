@@ -1,0 +1,10 @@
+aray and object: string, boolean, number aik addres k sath save ho jatay hay,
+jab bhi aap array and object may daitay hay to reference may save hota hay
+
+for(var i=0; i <rr1.length; i++)
+arr2.push(arr1[i])}
+let merge = arr1.concat(arr2)
+clg(arr2),
+
+pass by value 
+string, boolean, number..
